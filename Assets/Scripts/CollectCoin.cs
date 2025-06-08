@@ -10,6 +10,7 @@ public class CollectCoin : MonoBehaviour
     {
         coinFX.Play();
         MasterInfo.coinCount += 1;
+		MasterInfo.saveGame();
         this.gameObject.SetActive(false);
     }
 }
