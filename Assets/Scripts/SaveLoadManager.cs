@@ -3,18 +3,34 @@ using UnityEngine;
 
 public class SaveLoadManager : MonoBehaviour
 {
+    public static SaveLoadManager Instance { get; private set; }
+
+    public SaveData Data { get; private set; }
+
     private string saveFilePath;
 
-    public void SaveGame(int coins, bool unlocked)
+    private void Awake()
     {
-		saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json"); // todo move this to one central location
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
+        Data = LoadGame();
+    }
+
+    public void SaveGame()
+    {            
 		Debug.Log($"Save file location: {saveFilePath}");
 		Debug.Log($"Saving game to: {saveFilePath}");
-        SaveData data = new SaveData();
-        data.coinsCollected = coins;
-        data.collectiblesUnlocked = unlocked; // todo for future use
 
-        string json = JsonUtility.ToJson(data, true); // pretty print for readability
+        string json = JsonUtility.ToJson(Data, true);
         File.WriteAllText(saveFilePath, json);
 
         Debug.Log($"Game saved to: {saveFilePath}");
@@ -22,7 +38,6 @@ public class SaveLoadManager : MonoBehaviour
 
     public SaveData LoadGame()
     {
-		saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json"); // todo move this to one central location
 		Debug.Log($"Save file location: {saveFilePath}");
         if (File.Exists(saveFilePath))
         {
