@@ -6,7 +6,7 @@ public class CollisionDetect : MonoBehaviour
 {
 
     [SerializeField] GameObject thePlayer;
-    //[SerializeField] GameObject playerAnim;
+    //[SerializeField] GameObject playerAnim; // todo readd this?
     [SerializeField] AudioSource collisionFX;
     [SerializeField] GameObject mainCam;
     [SerializeField] GameObject fadeOut;
@@ -20,7 +20,7 @@ public class CollisionDetect : MonoBehaviour
     {
         collisionFX.Play();
         thePlayer.GetComponent<PlayerMovement>().enabled = false;
-        SaveLoadManager.Instance.SaveGame(); // todo don't need to pass these in anymore?
+        SaveLoadManager.Instance.SaveGame();
         //playerAnim.GetComponent<Animator>().Play("Stumble Backwards"); // todo readd this
         mainCam.GetComponent<Animator>().Play("CollisionCam");
         yield return new WaitForSeconds(3);
