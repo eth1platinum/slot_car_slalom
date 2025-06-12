@@ -11676,6 +11676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1886300180}
+  - component: {fileID: 1886300181}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -11696,10 +11697,24 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1096402969}
   - {fileID: 1965480177}
+  - {fileID: 1096402969}
   m_Father: {fileID: 1692089676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1886300181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886300179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc00dfdc2de0eb548af1ae1698a1a3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMixer: {fileID: 24100000, guid: 87e892fa5e8546b4e8aef6bc2341019d, type: 2}
+  masterVolumeValue: 10
 --- !u!1 &1886761058
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class SegmentGenerator : MonoBehaviour
 
     void Update()
     {
-        if (!creatingSegment)
+        if (!creatingSegment) // todo compare the player position against zpos to render a certain distance in front at all times
         {
             creatingSegment = true;
             StartCoroutine(SegmentGen());
@@ -21,7 +21,7 @@ public class SegmentGenerator : MonoBehaviour
 
     IEnumerator SegmentGen()
     {
-        segmentNum = Random.Range(0, 3);
+        segmentNum = Random.Range(0, 3); // todo change this to length of segment array
         Instantiate(segment[segmentNum], new Vector3(0, 0, zPos), Quaternion.identity);
         zPos += 50;
         yield return new WaitForSeconds(3);
