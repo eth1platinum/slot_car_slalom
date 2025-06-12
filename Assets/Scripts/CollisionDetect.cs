@@ -23,7 +23,10 @@ public class CollisionDetect : MonoBehaviour
         SaveLoadManager.Instance.SaveGame();
         //playerAnim.GetComponent<Animator>().Play("Stumble Backwards"); // todo readd this
         mainCam.GetComponent<Animator>().Play("CollisionCam");
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         fadeOut.SetActive(true);
+        yield return new WaitForSeconds(3);
+        SceneLoader loader = new SceneLoader(); // todo maybe make this singleton?
+        loader.loadMainMenu();
     }
 }
