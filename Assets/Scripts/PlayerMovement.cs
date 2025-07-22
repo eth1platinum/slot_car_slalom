@@ -12,6 +12,7 @@ enum PlayerPosition
 public class PlayerMovement : MonoBehaviour
 {
     public float playerSpeed = 6.0F;
+    public float playerMovement = 6.66F;
 
     PlayerPosition position = PlayerPosition.POSITION_CENTRE;
 
@@ -23,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         { // if A or left is pressed then move left
             if (position > PlayerPosition.POSITION_LEFT)
             { // if exceeded left limit then don't move
-                transform.Translate(Vector3.left * 5.5F);
+                transform.Translate(Vector3.left * playerMovement);
                 position--;
             }
         }
@@ -31,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         { // if D or right is pressed then move right
             if (position < PlayerPosition.POSITION_RIGHT)
             { // if exceeded right limit then don't move
-                transform.Translate(Vector3.right * 5.5F);
+                transform.Translate(Vector3.right * playerMovement);
                 position++;
             }
         }
