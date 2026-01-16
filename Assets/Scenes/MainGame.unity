@@ -4420,9 +4420,11 @@ MonoBehaviour:
   - {fileID: 2062997939}
   - {fileID: 1022510722}
   - {fileID: 1567163826}
+  player: {fileID: 327000804}
   zPos: 50
-  creatingSegment: 0
-  segmentNum: 0
+  segmentLength: 50
+  spawnDistance: 100
+  destroyDistance: 50
 --- !u!4 &1692089676
 Transform:
   m_ObjectHideFlags: 0

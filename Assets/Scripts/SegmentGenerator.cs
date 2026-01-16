@@ -4,27 +4,60 @@ using UnityEngine;
 
 public class SegmentGenerator : MonoBehaviour
 {
-
     public GameObject[] segment;
+    public Transform player;
+
     [SerializeField] int zPos = 50;
-    [SerializeField] bool creatingSegment = false;
-    [SerializeField] int segmentNum;
+    [SerializeField] int segmentLength = 50;
+    [SerializeField] float spawnDistance = 100f;
+    [SerializeField] float destroyDistance = 50f;
+
+    private List<GameObject> activeSegments = new List<GameObject>();
+    private bool creatingSegment = false;
 
     void Update()
     {
-        if (!creatingSegment) // todo compare the player position against zpos to render a certain distance in front at all times
+        // Spawn ahead of player
+        if (player.position.z + spawnDistance > zPos && !creatingSegment)
         {
-            creatingSegment = true;
             StartCoroutine(SegmentGen());
         }
+
+        CleanupSegments();
     }
 
     IEnumerator SegmentGen()
     {
-        segmentNum = Random.Range(0, 3); // todo change this to length of segment array
-        Instantiate(segment[segmentNum], new Vector3(0, 0, zPos), Quaternion.identity);
-        zPos += 50;
-        yield return new WaitForSeconds(3);
+        creatingSegment = true;
+
+        int segmentNum = Random.Range(0, segment.Length);
+        GameObject newSegment = Instantiate(
+            segment[segmentNum],
+            new Vector3(0, 0, zPos),
+            Quaternion.identity
+        );
+
+        activeSegments.Add(newSegment);
+
+        zPos += segmentLength;
+
+        yield return new WaitForSeconds(0.1f);
         creatingSegment = false;
     }
+
+    void CleanupSegments()
+    {
+        for (int i = activeSegments.Count - 1; i >= 0; i--)
+        {
+            GameObject seg = activeSegments[i];
+
+            if (player.position.z - seg.transform.position.z > destroyDistance)
+            {
+                Destroy(seg);
+                activeSegments.RemoveAt(i);
+            }
+        }
+    }
 }
+
+
