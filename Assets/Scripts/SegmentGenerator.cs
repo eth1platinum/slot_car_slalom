@@ -9,7 +9,7 @@ public class SegmentGenerator : MonoBehaviour
 
     [SerializeField] int zPos = 50;
     [SerializeField] int segmentLength = 50;
-    [SerializeField] float spawnDistance = 100f;
+    [SerializeField] float spawnDistance = 200f;
     [SerializeField] float destroyDistance = 50f;
 
     private List<GameObject> activeSegments = new List<GameObject>();
