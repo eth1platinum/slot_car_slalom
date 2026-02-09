@@ -5,6 +5,7 @@ using UnityEngine;
 public class SegmentGenerator : MonoBehaviour
 {
     public GameObject[] segment;
+    public GameObject backdrop;
     public Transform player;
 
     [SerializeField] int zPos = 50;
@@ -13,6 +14,7 @@ public class SegmentGenerator : MonoBehaviour
     [SerializeField] float destroyDistance = 50f;
 
     private List<GameObject> activeSegments = new List<GameObject>();
+    private List<GameObject> activeBackdrops = new List<GameObject>();
     private bool creatingSegment = false;
 
     void Update()
@@ -39,6 +41,14 @@ public class SegmentGenerator : MonoBehaviour
 
         activeSegments.Add(newSegment);
 
+        GameObject newBackdrop = Instantiate(
+            backdrop,
+            new Vector3(0, 0, zPos),
+            Quaternion.identity
+        );
+
+        activeBackdrops.Add(newBackdrop);
+
         zPos += segmentLength;
 
         yield return new WaitForSeconds(0.1f);
@@ -55,6 +65,17 @@ public class SegmentGenerator : MonoBehaviour
             {
                 Destroy(seg);
                 activeSegments.RemoveAt(i);
+            }
+        }
+
+        for (int j = activeBackdrops.Count - 1; j >= 0; j--)
+        {
+            GameObject bd = activeBackdrops[j];
+
+            if (player.position.z - bd.transform.position.z > destroyDistance)
+            {
+                Destroy(bd);
+                activeBackdrops.RemoveAt(j);
             }
         }
     }
