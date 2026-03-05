@@ -10,7 +10,7 @@ public class CollisionDetect : MonoBehaviour
     [SerializeField] AudioSource collisionFX;
     [SerializeField] GameObject mainCam;
     [SerializeField] GameObject fadeOut;
-    [SerializeField] SceneLoader loader;
+    [SerializeField] SceneLoadWrapper wrapper;
 
     void OnTriggerEnter(Collider other)
     {
@@ -27,6 +27,6 @@ public class CollisionDetect : MonoBehaviour
         yield return new WaitForSeconds(1);
         fadeOut.SetActive(true);
         yield return new WaitForSeconds(3);
-        loader.loadMainMenu();
+        wrapper.loadMainMenu();
     }
 }

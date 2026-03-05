@@ -1,6 +1,13 @@
+using System.Collections.Generic;
+
 [System.Serializable]
 public class SaveData
 {
-    public int coinsCollected;
-    public bool collectiblesUnlocked; // todo for future use, one for each collectible?
+    public int coinsCollected = 0;
+
+    // Store unlocked colors by ID
+    public List<string> unlockedCarColours = new List<string>();
+
+    // Currently selected color
+    public string selectedCarColour = "";
 }

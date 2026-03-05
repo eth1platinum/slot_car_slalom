@@ -14,12 +14,11 @@ public class SaveLoadManager : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
 
         saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
         Data = LoadGame();
@@ -49,7 +48,7 @@ public class SaveLoadManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Save file not found. Returning default data.");
-            return new SaveData(); // default values (coins=0, unlocked=false)
+            return new SaveData();
         }
     }
 }

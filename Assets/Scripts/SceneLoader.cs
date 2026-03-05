@@ -3,24 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
-{
-    public void loadMainGame()
+public static class SceneLoader
+{  
+    public static void loadMainGame()
     {
         SceneManager.LoadScene("MainGame");
     }
 
-    public void loadMainMenu()
+    public static void loadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void loadOptionsMenu()
+    public static void loadShopMenu()
+    {
+        SceneManager.LoadScene("ShopMenu");
+    }
+
+    public static void loadOptionsMenu()
     {
         SceneManager.LoadScene("OptionsMenu");
     }
 
-    public void quitGame()
+    public static void quitGame()
     {
         Application.Quit();
     }
