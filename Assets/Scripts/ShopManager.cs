@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-// todo tidy all of this
-
 public class ShopManager : MonoBehaviour
 {
     public CarColourDatabase availableColours;
@@ -10,8 +8,7 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         if (!SaveLoadManager.Instance.Data.unlockedCarColours.Contains("White"))
-        { // todo change this to whatever is first in the list? make sure this actually works
-            Debug.Log("Adding white to colour list");
+        {
             SaveLoadManager.Instance.Data.unlockedCarColours.Add("White");
         }
     }

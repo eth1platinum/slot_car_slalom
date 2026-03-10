@@ -14,14 +14,13 @@ public class CarColourManager : MonoBehaviour
     {
         carRenderer = car.GetComponent<MeshRenderer>();
         Material[] mats = carRenderer.materials;
-        carMaterial = mats[2]; // todo make this dynamic?
+        carMaterial = mats[2];
     }
 
     private void Start()
     {
         foreach (string id in SaveLoadManager.Instance.Data.unlockedCarColours)
         {
-            // todo may not need this?
             CarColourOption option = availableColours.colours.Find(c => c.colourID == id);
             unlockedColours.colours.Add(option);
         }
