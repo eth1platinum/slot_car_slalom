@@ -119,6 +119,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &157181353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 157181355}
+  - component: {fileID: 157181354}
+  m_Layer: 0
+  m_Name: SaveLoadManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &157181354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157181353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3dc47cfbbf23d47854865c9e894569, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveLoadManager
+--- !u!4 &157181355
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157181353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.83039, y: 0, z: -29.48234}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &298853532
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &506084370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,7 +284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57a8b5813cde3145909933c0285282d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarColourManager
-  carRenderer: {fileID: 0}
+  availableColours: {fileID: 11400000, guid: 22fd94fe4058f2248a93c8c18399dfaa, type: 2}
+  unlockedColours: {fileID: 11400000, guid: 185052478da0305438ee52a83310e048, type: 2}
+  car: {fileID: 0}
 --- !u!4 &506084371
 Transform:
   m_ObjectHideFlags: 0
@@ -583,10 +629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc076eaf7b44dc74086a289c2aac7fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopManager
-  availableColours:
-  - colourID: White
-    colourValue: {r: 1, g: 1, b: 1, a: 0}
-    price: 0
+  availableColours: {fileID: 11400000, guid: 22fd94fe4058f2248a93c8c18399dfaa, type: 2}
 --- !u!4 &1320315460
 Transform:
   m_ObjectHideFlags: 0
@@ -1098,3 +1141,4 @@ SceneRoots:
   - {fileID: 1947049266}
   - {fileID: 1320315460}
   - {fileID: 506084371}
+  - {fileID: 157181355}

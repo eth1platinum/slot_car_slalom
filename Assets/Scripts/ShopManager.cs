@@ -5,17 +5,18 @@ using System.Collections.Generic;
 
 public class ShopManager : MonoBehaviour
 {
-    [SerializeField] private List<CarColourOption> availableColours;
+    //[SerializeField] private List<CarColourOption> availableColours;
+    public CarColourDatabase availableColours;
     //[SerializeField] private CarColourManager carColourManager;
 
-    private SaveData Data => SaveLoadManager.Instance.Data;
+    //private SaveData Data => SaveLoadManager.Instance.Data;
 
     private void Start()
     {
-        if (!Data.unlockedCarColours.Contains("White"))
+        if (!SaveLoadManager.Instance.Data.unlockedCarColours.Contains("White"))
         { // todo change this to whatever is first in the list? make sure this actually works
             Debug.Log("Adding white to colour list");
-            Data.unlockedCarColours.Add("White");
+            SaveLoadManager.Instance.Data.unlockedCarColours.Add("White");
         }
     }
 
@@ -33,14 +34,14 @@ public class ShopManager : MonoBehaviour
 
     public void testFunc() // todo change all of this
     {
-        SelectColour(availableColours[0]);
+        SelectColour(availableColours.colours[1]);
     }
 
     private void TryPurchase(CarColourOption option)
     {
-        if (Data.coinsCollected >= option.price)
+        if (SaveLoadManager.Instance.Data.coinsCollected >= option.price)
         {
-            Data.coinsCollected -= option.price;
+            SaveLoadManager.Instance.Data.coinsCollected -= option.price;
 
             UnlockColour(option.colourID);
             ApplyColour(option);
@@ -56,22 +57,22 @@ public class ShopManager : MonoBehaviour
 
     private void UnlockColour(string id)
     {
-        if (!Data.unlockedCarColours.Contains(id))
+        if (!SaveLoadManager.Instance.Data.unlockedCarColours.Contains(id))
         {
-            Data.unlockedCarColours.Add(id);
+            SaveLoadManager.Instance.Data.unlockedCarColours.Add(id);
         }
     }
 
     private bool IsUnlocked(string id)
     {
-        return Data.unlockedCarColours.Contains(id);
+        return SaveLoadManager.Instance.Data.unlockedCarColours.Contains(id);
     }
 
     private void ApplyColour(CarColourOption option)
     {
         //carColourManager.ApplyColour(option.colourValue);
 
-        Data.selectedCarColour = option.colourID;
+        SaveLoadManager.Instance.Data.selectedCarColour = option.colourID;
         SaveLoadManager.Instance.SaveGame();
     }
 }

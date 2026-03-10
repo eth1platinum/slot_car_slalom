@@ -40,7 +40,7 @@ public class CarColourManager : MonoBehaviour
 
     public void ApplyColour(string colourID)
     {
-        CarColourOption option = availableColours.colours.Find(c => c.colourID == colourID);
+        CarColourOption option = unlockedColours.colours.Find(c => c.colourID == colourID);
         carMaterial.SetColor("_Color", option.colourValue);
         // todo make sure this only sets colours that are unlocked
     }
