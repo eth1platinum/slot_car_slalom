@@ -28,9 +28,10 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void testFunc() // todo change all of this
+    public void SelectColourFromId(string colourID)
     {
-        SelectColour(availableColours.colours[0]);
+        CarColourOption option = availableColours.colours.Find(c => c.colourID == colourID);
+        SelectColour(option);
     }
 
     private void TryPurchase(CarColourOption option)
