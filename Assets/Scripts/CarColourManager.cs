@@ -10,9 +10,6 @@ public class CarColourManager : MonoBehaviour
     private MeshRenderer carRenderer;
     private Material carMaterial;
 
-    //private List<CarColourOption> unlockedColours;
-    //private SaveData Data => SaveLoadManager.Instance.Data;
-
     private void Awake()
     {
         carRenderer = car.GetComponent<MeshRenderer>();
@@ -42,6 +39,5 @@ public class CarColourManager : MonoBehaviour
     {
         CarColourOption option = unlockedColours.colours.Find(c => c.colourID == colourID);
         carMaterial.SetColor("_Color", option.colourValue);
-        // todo make sure this only sets colours that are unlocked
     }
 }

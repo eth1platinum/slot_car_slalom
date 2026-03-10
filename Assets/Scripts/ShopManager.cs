@@ -5,11 +5,7 @@ using System.Collections.Generic;
 
 public class ShopManager : MonoBehaviour
 {
-    //[SerializeField] private List<CarColourOption> availableColours;
     public CarColourDatabase availableColours;
-    //[SerializeField] private CarColourManager carColourManager;
-
-    //private SaveData Data => SaveLoadManager.Instance.Data;
 
     private void Start()
     {
@@ -34,7 +30,7 @@ public class ShopManager : MonoBehaviour
 
     public void testFunc() // todo change all of this
     {
-        SelectColour(availableColours.colours[1]);
+        SelectColour(availableColours.colours[0]);
     }
 
     private void TryPurchase(CarColourOption option)
@@ -70,8 +66,6 @@ public class ShopManager : MonoBehaviour
 
     private void ApplyColour(CarColourOption option)
     {
-        //carColourManager.ApplyColour(option.colourValue);
-
         SaveLoadManager.Instance.Data.selectedCarColour = option.colourID;
         SaveLoadManager.Instance.SaveGame();
     }
