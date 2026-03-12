@@ -15,12 +15,21 @@ public class PlayerMovement : MonoBehaviour
     public float playerMovement = 6.66F;
     public GameObject backWall;
 
+    private float frameAccumulator = 0.0F; // helps to smooth forward movement and prevent jumpiness
+    private const float step = 0.02F;
+
     PlayerPosition position = PlayerPosition.POSITION_CENTRE;
 
     void Update()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * playerSpeed, Space.World);
-        backWall.transform.Translate(Vector3.forward * Time.deltaTime * playerSpeed, Space.World);
+        frameAccumulator += Time.deltaTime;
+
+        while (frameAccumulator >= step)
+        {
+            transform.Translate(Vector3.forward * step * playerSpeed, Space.World);
+            backWall.transform.Translate(Vector3.forward * step * playerSpeed, Space.World);
+            frameAccumulator -= step;
+        }
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) && Input.anyKeyDown)
         { // if A or left is pressed then move left

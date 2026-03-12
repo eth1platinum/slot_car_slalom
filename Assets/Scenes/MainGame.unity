@@ -1085,7 +1085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6aae10b6eb251640868c6afd69b5f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 10
+  playerSpeed: 20
   playerMovement: 6.66
   backWall: {fileID: 1741550508}
 --- !u!4 &327000804 stripped
