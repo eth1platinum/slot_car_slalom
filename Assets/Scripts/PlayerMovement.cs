@@ -12,6 +12,7 @@ enum PlayerPosition
 public class PlayerMovement : MonoBehaviour
 {
     public float playerSpeed = 6.0F;
+    public float boostMultiple = 1.0F;
     public float playerMovement = 6.66F;
     public GameObject backWall;
 
@@ -20,14 +21,30 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerPosition position = PlayerPosition.POSITION_CENTRE;
 
+    public void ApplySpeedBoost(float boostMultiplier, float boostDurationSecs, float maxBoostMultiplier)
+    {
+        if (boostMultiple * boostMultiplier <= maxBoostMultiplier)
+        {
+            StartCoroutine(ApplyBoost(boostMultiplier, boostDurationSecs));
+        }
+    }
+
+    private IEnumerator ApplyBoost(float boostMultiplier, float boostDurationSecs)
+    {
+        boostMultiple *= boostMultiplier;
+        yield return new WaitForSeconds(boostDurationSecs);
+        boostMultiple /= boostMultiplier;
+    }
+
     void Update()
     {
         frameAccumulator += Time.deltaTime;
 
         while (frameAccumulator >= step)
         {
-            transform.Translate(Vector3.forward * step * playerSpeed, Space.World);
-            backWall.transform.Translate(Vector3.forward * step * playerSpeed, Space.World);
+            float moveSpeed = step * playerSpeed * boostMultiple;
+            transform.Translate(Vector3.forward * moveSpeed, Space.World);
+            backWall.transform.Translate(Vector3.forward * moveSpeed, Space.World);
             frameAccumulator -= step;
         }
 
