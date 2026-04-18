@@ -5,11 +5,20 @@ using UnityEngine;
 public class CollectCoin : MonoBehaviour
 {
     [SerializeField] AudioSource coinFX;
+    [SerializeField] int coinValue = 1;
+
+    [SerializeField] CoinManager coinManager;
 
     void OnTriggerEnter(Collider other)
     {
         coinFX.Play();
-        SaveLoadManager.Instance.Data.coinsCollected += 1;
+
+        float finalValue = coinValue;
+
+        finalValue *= coinManager.coinMultiplier;
+
+        SaveLoadManager.Instance.Data.coinsCollected += Mathf.RoundToInt(finalValue);
+
         this.gameObject.SetActive(false);
     }
 }

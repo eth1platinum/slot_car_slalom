@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class SpeedMultiplier : MonoBehaviour
 {
-    public float boostMultiplier = 2F;
+    public int boostMultiplier = 2;
     public float boostDurationSecs = 3F;
-    public float maxMultiplier = 8F;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,7 +12,7 @@ public class SpeedMultiplier : MonoBehaviour
 
         if (movement != null)
         {
-            movement.ApplySpeedBoost(boostMultiplier, boostDurationSecs, maxMultiplier);
+            movement.ApplySpeedBoost(boostMultiplier, boostDurationSecs);
         }
 
     }

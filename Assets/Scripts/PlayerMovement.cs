@@ -11,33 +11,43 @@ enum PlayerPosition
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float playerSpeed = 6.0F;
-    public float boostMultiple = 1.0F;
+    public float playerSpeed = 3.0F;
+    public float boostMultiple = 2f;
     public float playerMovement = 6.66F;
     public GameObject backWall;
 
-    private float frameAccumulator = 0.0F; // helps to smooth forward movement and prevent jumpiness
+    public CoinManager coinManager;
+
+    private float frameAccumulator = 0.0F;
     private const float step = 0.02F;
+    private float maxMultiplier = 4f;
 
     PlayerPosition position = PlayerPosition.POSITION_CENTRE;
 
-    public void ApplySpeedBoost(float boostMultiplier, float boostDurationSecs, float maxBoostMultiplier)
+    private IEnumerator ApplyTemporaryBoost(float multiplier, float duration)
     {
-        if (boostMultiple * boostMultiplier <= maxBoostMultiplier)
-        {
-            StartCoroutine(ApplyBoost(boostMultiplier, boostDurationSecs));
-        }
+        // Apply boost
+        boostMultiple *= multiplier;
+        coinManager.coinMultiplier *= multiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        // Revert boost
+        boostMultiple /= multiplier;
+        coinManager.coinMultiplier /= multiplier;
     }
 
-    private IEnumerator ApplyBoost(float boostMultiplier, float boostDurationSecs)
+    public void ApplySpeedBoost(float boostMultiplier, float boostDurationSecs)
     {
-        boostMultiple *= boostMultiplier;
-        yield return new WaitForSeconds(boostDurationSecs);
-        boostMultiple /= boostMultiplier;
+        if (boostMultiple * boostMultiplier <= maxMultiplier)
+        {
+            StartCoroutine(ApplyTemporaryBoost(boostMultiplier, boostDurationSecs));
+        }
     }
 
     void Update()
     {
+        // Forward movement
         frameAccumulator += Time.deltaTime;
 
         while (frameAccumulator >= step)
@@ -48,20 +58,41 @@ public class PlayerMovement : MonoBehaviour
             frameAccumulator -= step;
         }
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) && Input.anyKeyDown)
-        { // if A or left is pressed then move left
+        // LEFT
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
             if (position > PlayerPosition.POSITION_LEFT)
-            { // if exceeded left limit then don't move
+            {
                 transform.Translate(Vector3.left * playerMovement);
                 position--;
             }
         }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) && Input.anyKeyDown)
-        { // if D or right is pressed then move right
+
+        // RIGHT
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
             if (position < PlayerPosition.POSITION_RIGHT)
-            { // if exceeded right limit then don't move
+            {
                 transform.Translate(Vector3.right * playerMovement);
                 position++;
+            }
+        }
+
+        // BOOST (double for 3 seconds)
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (boostMultiple * 2f <= maxMultiplier)
+            {
+                StartCoroutine(ApplyTemporaryBoost(2f, 3f));
+            }
+        }
+
+        // REDUCE (half for 3 seconds)
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (boostMultiple * 0.5f >= 1f)
+            {
+                StartCoroutine(ApplyTemporaryBoost(0.5f, 3f));
             }
         }
     }
