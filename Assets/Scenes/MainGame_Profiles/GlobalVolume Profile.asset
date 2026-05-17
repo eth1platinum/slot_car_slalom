@@ -35,13 +35,13 @@ MonoBehaviour:
     value: 5
   threshold:
     overrideState: 1
-    value: 2
+    value: 0
   softKnee:
     overrideState: 1
     value: 0.3
   clamp:
     overrideState: 1
-    value: 5
+    value: 1
   diffusion:
     overrideState: 1
     value: 3
