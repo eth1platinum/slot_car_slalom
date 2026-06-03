@@ -13,8 +13,8 @@ public class SegmentGenerator : MonoBehaviour
     [Header("LED Strip")]
     public GameObject ledPrefab;
     public float ledSpacing = 0.5f;
-    public float ledOffsetX = 10f;   // slightly inset from 10-wide edge
-    public float ledHeight = 0.6f;   // avoids z-fighting
+    public float ledOffsetX = 10f;
+    public float ledHeight = 0.6f;
 
     public Color color1 = Color.magenta;
     public Color color2 = Color.yellow;
@@ -28,19 +28,24 @@ public class SegmentGenerator : MonoBehaviour
 
     private List<GameObject> activeSegments = new List<GameObject>();
     private List<GameObject> activeBackdrops = new List<GameObject>();
-    private bool creatingSegment = false;
 
     void Start()
     {
         SpawnInitialSegment();
+
+        // Generate enough segments ahead of the player immediately.
+        while (player.position.z + spawnDistance > zPos)
+        {
+            GenerateSegment();
+        }
     }
 
     void Update()
     {
-        // Spawn ahead of player
-        if (player.position.z + spawnDistance > zPos && !creatingSegment)
+        // Keep generating ahead of the player.
+        while (player.position.z + spawnDistance > zPos)
         {
-            StartCoroutine(SegmentGen());
+            GenerateSegment();
         }
 
         CleanupSegments();
@@ -69,14 +74,10 @@ public class SegmentGenerator : MonoBehaviour
         zPos += segmentLength;
     }
 
-    // todo this and spawninitialsegment share code, refactor?
-    IEnumerator SegmentGen()
+    void GenerateSegment()
     {
-        creatingSegment = true;
-
         int segmentNum = Random.Range(0, segment.Length);
 
-        // Spawn segment
         GameObject newSegment = Instantiate(
             segment[segmentNum],
             new Vector3(0, 0, zPos),
@@ -85,10 +86,8 @@ public class SegmentGenerator : MonoBehaviour
 
         activeSegments.Add(newSegment);
 
-        // Generate LEDs for this segment
         GenerateLEDStrip(newSegment);
 
-        // Spawn backdrop
         GameObject newBackdrop = Instantiate(
             backdrop,
             new Vector3(0, 0, zPos),
@@ -98,9 +97,6 @@ public class SegmentGenerator : MonoBehaviour
         activeBackdrops.Add(newBackdrop);
 
         zPos += segmentLength;
-
-        yield return new WaitForSeconds(0.1f);
-        creatingSegment = false;
     }
 
     void GenerateLEDStrip(GameObject parentSegment)
@@ -137,17 +133,11 @@ public class SegmentGenerator : MonoBehaviour
 
     void SpawnLED(Vector3 localPos, Color color, Transform parent)
     {
-        // Spawn as child using prefab rotation
-        GameObject led = Instantiate(
-            ledPrefab,
-            parent
-        );
+        GameObject led = Instantiate(ledPrefab, parent);
 
-        // Local positioning relative to segment
         led.transform.localPosition = localPos;
         led.transform.localRotation = ledPrefab.transform.localRotation;
 
-        // Material setup
         Renderer rend = led.GetComponent<Renderer>();
 
         if (rend != null)
@@ -155,10 +145,7 @@ public class SegmentGenerator : MonoBehaviour
             MaterialPropertyBlock block = new MaterialPropertyBlock();
             rend.GetPropertyBlock(block);
 
-            // Standard shader uses _Color (albedo)
             block.SetColor("_Color", color);
-
-            // Emission (Standard shader)
             block.SetColor("_EmissionColor", color * emissionIntensity);
 
             rend.SetPropertyBlock(block);
