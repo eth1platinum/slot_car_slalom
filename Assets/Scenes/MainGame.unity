@@ -1090,6 +1090,9 @@ MonoBehaviour:
   boostMultiple: 2
   playerMovement: 6.66
   backWall: {fileID: 1741550508}
+  hopHeight: 1
+  hopTime: 0.02
+  acrossTime: 0.04
   coinManager: {fileID: 75353025}
 --- !u!4 &327000804 stripped
 Transform:
