@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 enum PlayerPosition
 {
@@ -23,6 +24,32 @@ public class PlayerMovement : MonoBehaviour
     public float acrossTime = 0.04f;
 
     public CoinManager coinManager;
+
+    // ==========================================
+    // COUNTDOWN
+    // ==========================================
+
+    [Header("Countdown")]
+    public GameObject countdownPanel;
+    public TextMeshProUGUI countdownText;
+
+    public float countdownTime = 1f;
+
+    private bool gameStarted = false;
+
+    [Header("Left Traffic Lights")]
+    public Image leftLight1;
+    public Image leftLight2;
+    public Image leftLight3;
+
+    [Header("Right Traffic Lights")]
+    public Image rightLight1;
+    public Image rightLight2;
+    public Image rightLight3;
+
+    public Color lightOffColour = new Color32(100, 0, 0, 255);
+    public Color redColour = Color.red;
+    public Color greenColour = Color.green;
 
     // ==========================================
     // POWER-UP UI
@@ -66,8 +93,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        // Both power-ups start empty and begin
-        // recharging immediately.
+        // Both power-ups start empty.
+        // They will begin recharging when the countdown finishes.
 
         boostRechargeTimer = 0f;
         slowRechargeTimer = 0f;
@@ -77,6 +104,93 @@ public class PlayerMovement : MonoBehaviour
 
         UpdateBoostUI();
         UpdateSlowUI();
+
+
+        // ==========================================
+        // START COUNTDOWN
+        // ==========================================
+
+        gameStarted = false;
+
+        if (countdownPanel != null)
+            countdownPanel.SetActive(true);
+
+        StartCoroutine(StartCountdown());
+    }
+
+
+    // ==========================================
+    // COUNTDOWN
+    // ==========================================
+
+    private IEnumerator StartCountdown()
+    {
+        // -------------------------
+        // 3
+        // -------------------------
+
+        countdownText.text = "3";
+
+        SetTrafficLights(
+            redColour,
+            lightOffColour,
+            lightOffColour
+        );
+
+        yield return new WaitForSeconds(countdownTime);
+
+
+        // -------------------------
+        // 2
+        // -------------------------
+
+        countdownText.text = "2";
+
+        SetTrafficLights(
+            redColour,
+            redColour,
+            lightOffColour
+        );
+
+        yield return new WaitForSeconds(countdownTime);
+
+
+        // -------------------------
+        // 1
+        // -------------------------
+
+        countdownText.text = "1";
+
+        SetTrafficLights(
+            redColour,
+            redColour,
+            redColour
+        );
+
+        yield return new WaitForSeconds(countdownTime);
+
+
+        // -------------------------
+        // GO!
+        // -------------------------
+
+        countdownText.text = "GO!";
+
+        SetTrafficLights(
+            greenColour,
+            greenColour,
+            greenColour
+        );
+
+        gameStarted = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+
+        // Hide countdown UI
+
+        if (countdownPanel != null)
+            countdownPanel.SetActive(false);
     }
 
 
@@ -118,6 +232,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        // ==========================================
+        // WAIT FOR COUNTDOWN
+        // ==========================================
+
+        if (!gameStarted)
+            return;
+
+
         // ==========================================
         // FORWARD MOVEMENT
         // ==========================================
@@ -472,5 +594,34 @@ public class PlayerMovement : MonoBehaviour
         );
 
         isSwitchingLane = false;
+    }
+
+    private void SetTrafficLights(
+    Color light1Colour,
+    Color light2Colour,
+    Color light3Colour)
+    {
+        // LEFT
+
+        if (leftLight1 != null)
+            leftLight1.color = light1Colour;
+
+        if (leftLight2 != null)
+            leftLight2.color = light2Colour;
+
+        if (leftLight3 != null)
+            leftLight3.color = light3Colour;
+
+
+        // RIGHT
+
+        if (rightLight1 != null)
+            rightLight1.color = light1Colour;
+
+        if (rightLight2 != null)
+            rightLight2.color = light2Colour;
+
+        if (rightLight3 != null)
+            rightLight3.color = light3Colour;
     }
 }
