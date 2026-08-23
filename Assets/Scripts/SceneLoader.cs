@@ -4,7 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public static class SceneLoader
-{  
+{
+    public static void loadCreditsMenu()
+    {
+        SceneManager.LoadScene("CreditsMenu");
+    }
     public static void loadMainGame()
     {
         SceneManager.LoadScene("MainGame");
