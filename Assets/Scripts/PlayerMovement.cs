@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
 
     public CoinManager coinManager;
 
+    public RunTimer runTimer;
+
     // ==========================================
     // COUNTDOWN
     // ==========================================
@@ -181,6 +183,8 @@ public class PlayerMovement : MonoBehaviour
             greenColour,
             greenColour
         );
+
+        runTimer.StartRun();
 
         gameStarted = true;
 

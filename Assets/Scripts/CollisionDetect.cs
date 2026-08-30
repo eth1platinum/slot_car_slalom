@@ -6,11 +6,12 @@ public class CollisionDetect : MonoBehaviour
 {
 
     [SerializeField] GameObject thePlayer;
-    //[SerializeField] GameObject playerAnim; // todo readd this?
     [SerializeField] AudioSource collisionFX;
     [SerializeField] GameObject mainCam;
     [SerializeField] GameObject fadeOut;
     [SerializeField] SceneLoadWrapper wrapper;
+
+    public RunTimer runTimer;
 
     void OnTriggerEnter(Collider other)
     {
@@ -21,8 +22,8 @@ public class CollisionDetect : MonoBehaviour
     {
         collisionFX.Play();
         thePlayer.GetComponent<PlayerMovement>().enabled = false;
+        runTimer.StopRun();
         SaveLoadManager.Instance.SaveGame();
-        //playerAnim.GetComponent<Animator>().Play("Stumble Backwards"); // todo readd this
         mainCam.GetComponent<Animator>().Play("CollisionCam");
         yield return new WaitForSeconds(1);
         fadeOut.SetActive(true);

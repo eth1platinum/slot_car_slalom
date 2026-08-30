@@ -10,4 +10,7 @@ public class SaveData
 
     // Currently selected color
     public string selectedCarColour = "";
+
+    // longest time spent in one run in seconds
+    public float longestRunTime = 0f;
 }
