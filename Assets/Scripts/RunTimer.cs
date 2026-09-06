@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class RunTimer : MonoBehaviour
 {
@@ -79,8 +80,11 @@ public class RunTimer : MonoBehaviour
         if (currentRunTime > SaveLoadManager.Instance.Data.longestRunTime)
         {
             SaveLoadManager.Instance.Data.longestRunTime = currentRunTime;
-
-            Debug.Log($"New personal best! {FormatTime(currentRunTime)}"); // todo add this to UI
+            SceneLoader.brokePersonalBest = true;
+        }
+        else
+        {
+            SceneLoader.brokePersonalBest = false;
         }
     }
 

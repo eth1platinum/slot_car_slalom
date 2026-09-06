@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public static class SceneLoader
 {
+
+    public static bool brokePersonalBest;
     public static void loadCreditsMenu()
     {
         SceneManager.LoadScene("CreditsMenu");
@@ -27,6 +29,10 @@ public static class SceneLoader
     public static void loadOptionsMenu()
     {
         SceneManager.LoadScene("OptionsMenu");
+    }
+    public static void loadGameOverScreen()
+    {
+        SceneManager.LoadScene("GameOverScreen");
     }
 
     public static void quitGame()

@@ -28,6 +28,6 @@ public class CollisionDetect : MonoBehaviour
         yield return new WaitForSeconds(1);
         fadeOut.SetActive(true);
         yield return new WaitForSeconds(3);
-        wrapper.loadMainMenu();
+        wrapper.loadGameOverScreen();
     }
 }

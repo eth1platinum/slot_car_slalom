@@ -27,6 +27,11 @@ public class SceneLoadWrapper : MonoBehaviour
         SceneLoader.loadOptionsMenu();
     }
 
+    public void loadGameOverScreen()
+    {
+        SceneLoader.loadGameOverScreen();
+    }
+
     public void quitGame()
     {
         SceneLoader.quitGame();
